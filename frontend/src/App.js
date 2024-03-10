@@ -16,13 +16,13 @@ import { BookingHistory } from "./componets/Booking/BookingHistory";
 import TeacherDashboard from "./componets/Teacher/TeacherDashboard";
 
 function App() {
-  const { auth } = useSelector((store) => store);
+  const { auth,teacher } = useSelector((store) => store);
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
 
   useEffect(() => {
     dispatch(getUser(jwt));
-  }, [auth.jwt]);
+  }, [auth.jwt,teacher.teacher]);
   return (
     <>
       {" "}

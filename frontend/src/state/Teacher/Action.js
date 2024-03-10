@@ -1,4 +1,4 @@
-import * as types from './actionTypes';
+import * as types from './ActionTypes';
 import { api } from '../../config/api';
 
 export const createTeacher = (jwt, teacherRequest) => async (dispatch) => {
@@ -20,17 +20,19 @@ export const createTeacher = (jwt, teacherRequest) => async (dispatch) => {
 };
 
 // Action creators for updating a teacher
-export const updateTeacher = (jwt, teacherRequest) => async (dispatch) => {
+export const updateTeacher = ({jwt, teacherRequest}) => async (dispatch) => {
   dispatch({ type: types.UPDATE_TEACHER_REQUEST });
   try {
     const response = await api.put('/api/teachers', teacherRequest, {
-      headers: { Authorization: jwt },
+      headers: { Authorization: `Bearer ${jwt}` },
     });
     dispatch({
       type: types.UPDATE_TEACHER_SUCCESS,
       payload: response.data,
     });
+    console.log("updated teacher",response.data);
   } catch (error) {
+    console.log("error ",error)
     dispatch({
       type: types.UPDATE_TEACHER_FAILURE,
       payload: error.message,
@@ -39,10 +41,14 @@ export const updateTeacher = (jwt, teacherRequest) => async (dispatch) => {
 };
 
 // Action creators for deleting a teacher
-export const deleteTeacher = (id) => async (dispatch) => {
+export const deleteTeacher = ({id,jwt}) => async (dispatch) => {
   dispatch({ type: types.DELETE_TEACHER_REQUEST });
   try {
-    await api.delete(`/api/teachers/${id}`);
+    await api.delete(`/api/teachers/${id}`,
+    {
+      headers: { Authorization: `Bearer ${jwt}` },
+    }
+    );
     dispatch({
       type: types.DELETE_TEACHER_SUCCESS,
       payload: id,
@@ -56,10 +62,12 @@ export const deleteTeacher = (id) => async (dispatch) => {
 };
 
 // Action creators for getting a teacher by ID
-export const getTeacherById = (id) => async (dispatch) => {
+export const getTeacherById = ({id,jwt}) => async (dispatch) => {
   dispatch({ type: types.GET_TEACHER_REQUEST });
   try {
-    const response = await api.get(`/api/teachers/${id}`);
+    const response = await api.get(`/api/teachers/${id}`,{
+      headers: { Authorization: `Bearer ${jwt}` },
+    });
     dispatch({
       type: types.GET_TEACHER_SUCCESS,
       payload: response.data,

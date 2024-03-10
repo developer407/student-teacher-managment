@@ -1,5 +1,5 @@
 // reducer.js
-import * as types from './actionTypes';
+import * as types from './ActionTypes';
 
 const initialState = {
   teachers: [],
@@ -28,6 +28,7 @@ const teacherReducer = (state = initialState, action) => {
         loading: false,
         teacher: action.payload,
       };
+    
     case types.DELETE_TEACHER_SUCCESS:
       return {
         ...state,
