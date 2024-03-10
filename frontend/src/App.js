@@ -11,15 +11,18 @@ import { getUser } from "./state/Authentication/Action";
 import { useEffect } from "react";
 import CreateUserForm from "./Auth/Register";
 import { BookingDetails } from "./componets/Admin/BookingDetails";
+import { Student } from "./componets/Student/Student";
+import { BookingHistory } from "./componets/Booking/BookingHistory";
+import TeacherDashboard from "./componets/Teacher/TeacherDashboard";
 
 function App() {
   const { auth } = useSelector((store) => store);
-  const dispatch=useDispatch();
-  const jwt=localStorage.getItem('jwt');
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
 
   useEffect(() => {
     dispatch(getUser(jwt));
-  }, []);
+  }, [auth.jwt]);
   return (
     <>
       {" "}
@@ -27,11 +30,28 @@ function App() {
         <>
           <Navbar />
           <Routes>
-            <Route path="/" element={<AdminDashboard />} />
+            <Route
+              path="/"
+              element={
+                auth.user.role === "ROLE_ADMIN" ? (
+                  <AdminDashboard />
+                ) : auth.user.role === "ROLE_TEACHER" ? (
+                  <TeacherDashboard />
+                ) : (
+                  <Student />
+                )
+              }
+            />
+            <Route path="/bookings" element={<BookingHistory />} />
             <Route path="/booking/:id" element={<BookingDetails />} />
-            <Route path="/add-user" element={<div className="mt-5 lg:mt-20">
-              <CreateUserForm />
-            </div>} />
+            <Route
+              path="/add-user"
+              element={
+                <div className="mt-5 lg:mt-20">
+                  <CreateUserForm />
+                </div>
+              }
+            />
           </Routes>
         </>
       ) : (

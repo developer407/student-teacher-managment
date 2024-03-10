@@ -65,7 +65,8 @@ const Navbar = () => {
               }}
             >
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
-              <MenuItem onClick={()=>navigate("/add-user")}>Add Teacher/Student</MenuItem>
+              {auth.user.role==="ROLE_ADMIN" && <MenuItem onClick={()=>navigate("/add-user")}>Add Teacher/Student</MenuItem>}
+              {(auth.user.role==="ROLE_STUDENT" || auth.user.role==="ROLE_TEACHER") && <MenuItem onClick={()=>navigate("/bookings")}>Your Bookings</MenuItem>}
             </Menu>
           </>
         ) : (

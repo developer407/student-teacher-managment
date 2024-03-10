@@ -14,17 +14,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from "react-router-dom";
 
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
 
 export default function BookingTable() {
   const navigate=useNavigate();
@@ -50,7 +40,6 @@ export default function BookingTable() {
               <TableCell>
                 Status
               </TableCell>
-              <TableCell align="right">Details</TableCell>
               <TableCell align="right">Update</TableCell>
               <TableCell align="right">Remove</TableCell>
             </TableRow>
@@ -74,12 +63,10 @@ export default function BookingTable() {
                   {item.status}
                 </TableCell>
                 
-                <TableCell align="right">
-                  <Button onClick={()=>navigate(`/booking/${item.id}`)} size="small">Details</Button>
-                </TableCell>
+               
                
                 <TableCell align="right">
-                  <IconButton color="">
+                  <IconButton onClick={()=>navigate(`/booking/${item.id}`)} color="">
                     <EditIcon />
                   </IconButton>
                 </TableCell>

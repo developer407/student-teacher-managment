@@ -22,7 +22,7 @@ export const BookingDetailsCard = ({ item }) => {
   const dispatch = useDispatch();
   const { booking, auth } = useSelector((store) => store);
   const jwt = localStorage.getItem("jwt");
-  const [completedHours,setCompletedHours] =useState(0)
+  const [completedHours,setCompletedHours] =useState("")
  
   const handleChange=(e)=>{
     setCompletedHours(e.target.value)
@@ -33,10 +33,11 @@ export const BookingDetailsCard = ({ item }) => {
     const data={completedHours}
     console.log("submit")
     dispatch(updateBooking({jwt,bookingRequest:data,id:item.id}))
+    setCompletedHours(0)
 
   }
   return (
-    <div className="lg:flex gap-5">
+    <div className="">
       <div className="lg:w-[30vw]  p-5 border rounded-md">
         <h1 className="pb-5 text-3xl font-semibold">Booking Details</h1>
         <div className="space-y-3">
@@ -48,24 +49,24 @@ export const BookingDetailsCard = ({ item }) => {
             <p>{booking.booking?.totalHours} </p>
           </div>
           <div className="flex justify-between">
-            <p className="w-52"> Pendding Hours: </p>
+            <p className="w-52 text-red-600 font-semibold"> Pendding Hours: </p>
             {booking.booking?.pendingHours}
           </div>
           <div className="flex justify-between">
-            <p className="w-52"> Completed Hours: </p>
+            <p className="w-52 text-green-600 font-semibold"> Completed Hours: </p>
             {booking.booking?.completedHours}
           </div>
           <div className="flex justify-between">
             {" "}
-            <p className="w-52"> Fees: </p> {599}
+            <p className="w-52"> Fees: </p> <p>${item?.grad?.fees}</p>
           </div>
           <div className="flex justify-between">
             {" "}
-            <p className="w-52"> Grad: </p> {"Graduate"}
+            <p className="w-52"> Grad: </p> <p>{item?.grad?.grad}</p>
           </div>
           <div className="flex justify-between">
             {" "}
-            <p className="w-52"> Subject: </p> {"Django"}
+            <p className="w-52"> Subject: </p> <p>{item?.subject}</p>
           </div>
           <div className="flex justify-between">
             <p className="w-52">Status:</p>
@@ -79,49 +80,7 @@ export const BookingDetailsCard = ({ item }) => {
           </div>
         </div>
       </div>
-      <div className="lg:w-[30vw] space-y-6">
-        <div className="border rounded-md p-5 ">
-          <h1 className="mb-5">Students Details </h1>
-          <div className="flex justify-between">
-            <p className="font-semibold">Full Name</p>
-            <p className="">{item?.student.fullName}</p>
-          </div>
-          <div className="flex justify-between">
-            <p className="font-semibold">Email</p>
-            <p className="">{item?.student.email}</p>
-          </div>
-        </div>
-        <div className="border rounded-md p-5 ">
-          <h1 className="mb-5">Teachers Details </h1>
-          <div className="flex justify-between">
-            <p className="font-semibold">Full Name</p>
-            <p className="">{item?.teacher.fullName}</p>
-          </div>
-          <div className="flex justify-between">
-            <p className="font-semibold">Email</p>
-            <p className="">{item?.teacher?.email}</p>
-          </div>
-        </div>
-        <div >
-          <form className="flex gap-5 justify-between" onSubmit={handleSubmit}>
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              label="Enter Completed Hours"
-              variant="outlined"
-              onChange={handleChange}
-            />
-            <Button
-             type="submit"
-              variant="contained"
-              sx={{ p: "1rem" }}
-              className=""
-            >
-              Update
-            </Button>
-          </form>
-        </div>
-      </div>
+     
     </div>
   );
 };

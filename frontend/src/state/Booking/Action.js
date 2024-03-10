@@ -3,8 +3,7 @@
 import { api } from '../../config/api';
 import * as types from './actionTypes';
 
-// Action creators for creating a booking
-export const createBooking = ({jwt, bookingRequest}) => async (dispatch) => {
+export const createBooking = ({jwt, bookingRequest,navigate}) => async (dispatch) => {
   dispatch({ type: types.CREATE_BOOKING_REQUEST });
   try {
     const response = await api.post('/api/booking', bookingRequest, {
@@ -14,6 +13,9 @@ export const createBooking = ({jwt, bookingRequest}) => async (dispatch) => {
       type: types.CREATE_BOOKING_SUCCESS,
       payload: response.data,
     });
+    console.log(response.data);
+    navigate(`/booking/${response.data.id}`)
+
   } catch (error) {
     dispatch({
       type: types.CREATE_BOOKING_FAILURE,
@@ -22,7 +24,6 @@ export const createBooking = ({jwt, bookingRequest}) => async (dispatch) => {
   }
 };
 
-// Action creators for updating a booking
 export const updateBooking = ({id, bookingRequest,jwt}) => async (dispatch) => {
   dispatch({ type: types.UPDATE_BOOKING_REQUEST });
   try {
@@ -41,7 +42,6 @@ export const updateBooking = ({id, bookingRequest,jwt}) => async (dispatch) => {
   }
 };
 
-// Action creators for deleting a booking
 export const deleteBooking = ({id,jwt}) => async (dispatch) => {
   dispatch({ type: types.DELETE_BOOKING_REQUEST });
   try {
@@ -60,7 +60,6 @@ export const deleteBooking = ({id,jwt}) => async (dispatch) => {
   }
 };
 
-// Action creators for getting a booking by ID
 export const getBookingById = ({id,jwt}) => async (dispatch) => {
   dispatch({ type: types.GET_BOOKING_REQUEST });
   try {
@@ -79,7 +78,6 @@ export const getBookingById = ({id,jwt}) => async (dispatch) => {
   }
 };
 
-// Action creators for getting all bookings
 export const getBookingList = ({jwt}) => async (dispatch) => {
     console.log("jwt",jwt)
   dispatch({ type: types.GET_ALL_BOOKINGS_REQUEST });
@@ -99,4 +97,25 @@ export const getBookingList = ({jwt}) => async (dispatch) => {
       payload: error.message,
     });
   }
+};
+
+export const getBookingHistory = ({jwt,userId}) => async (dispatch) => {
+  console.log("jwt",jwt)
+dispatch({ type: types.GET_BOOKING_HISTORY_FAILURE });
+try {
+  const response = await api.get(`/api/booking/history/${userId}`,{
+      headers: { Authorization: `Bearer ${jwt}` },
+    });
+  dispatch({
+    type: types.GET_BOOKING_HISTORY_SUCCESS,
+    payload: response.data,
+  });
+  console.log("booking HISTORY ",response.data)
+} catch (error) {
+  console.log("error ",error)
+  dispatch({
+    type: types.GET_BOOKING_HISTORY_REQUEST,
+    payload: error.message,
+  });
+}
 };
