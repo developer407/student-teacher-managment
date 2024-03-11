@@ -73,6 +73,7 @@ export const getTeacherById = ({id,jwt}) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
+    console.log("error",error)
     dispatch({
       type: types.GET_TEACHER_FAILURE,
       payload: error.message,
@@ -80,4 +81,24 @@ export const getTeacherById = ({id,jwt}) => async (dispatch) => {
   }
 };
 
+
+export const payTeacherAmount = ({jwt, teacherRequest}) => async (dispatch) => {
+  dispatch({ type: types.PAY_TEACHER_AMOUNT_REQUEST });
+  try {
+    const response = await api.put('/api/teachers/pay', teacherRequest, {
+      headers: { Authorization: `Bearer ${jwt}` },
+    });
+    dispatch({
+      type: types.PAY_TEACHER_AMOUNT_SUCCESS,
+      payload: response.data,
+    });
+    console.log("updated teacher",response.data);
+  } catch (error) {
+    console.log("error ",error)
+    dispatch({
+      type: types.PAY_TEACHER_AMOUNT_FAILURE,
+      payload: error.message,
+    });
+  }
+};
 

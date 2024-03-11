@@ -35,6 +35,7 @@ export const updateBooking = ({id, bookingRequest,jwt}) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
+    console.log("error ",error)
     dispatch({
       type: types.UPDATE_BOOKING_FAILURE,
       payload: error.message,

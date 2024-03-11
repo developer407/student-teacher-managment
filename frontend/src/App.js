@@ -14,6 +14,7 @@ import { BookingDetails } from "./componets/Admin/BookingDetails";
 import { Student } from "./componets/Student/Student";
 import { BookingHistory } from "./componets/Booking/BookingHistory";
 import TeacherDashboard from "./componets/Teacher/TeacherDashboard";
+import { TeacherDetails } from "./componets/Admin/TeacherDetails";
 
 function App() {
   const { auth,teacher } = useSelector((store) => store);
@@ -44,6 +45,7 @@ function App() {
             />
             <Route path="/bookings" element={<BookingHistory />} />
             <Route path="/booking/:id" element={<BookingDetails />} />
+            <Route path="/teacher/:id" element={<TeacherDetails />} />
             <Route
               path="/add-user"
               element={

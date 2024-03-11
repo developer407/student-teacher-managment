@@ -169,7 +169,7 @@ function TeacherDashboard() {
           <Card className="p-5 w-full">
             <div className="flex justify-between">
               <p className="font-semibold text-gray-800 pb-2">Pending Amount</p>
-              <p className="">$990</p>
+              <p className="">${auth?.user?.teacher?.pendingAmount}</p>
             </div>
           </Card>
           <Card className="p-5 w-full">

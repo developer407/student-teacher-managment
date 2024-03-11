@@ -1,5 +1,5 @@
 // reducer.js
-import * as types from './ActionTypes';
+import * as types from "./ActionTypes";
 
 const initialState = {
   teachers: [],
@@ -21,19 +21,30 @@ const teacherReducer = (state = initialState, action) => {
         error: null,
       };
     case types.CREATE_TEACHER_SUCCESS:
-    case types.UPDATE_TEACHER_SUCCESS:
     case types.GET_TEACHER_SUCCESS:
+    case types.UPDATE_TEACHER_SUCCESS:
       return {
         ...state,
         loading: false,
         teacher: action.payload,
       };
-    
+    case types.PAY_TEACHER_AMOUNT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        teachers: state.teachers.map((teacher) =>
+          teacher.id === action.payload.id ? action.payload : teacher
+        ),
+        teacher:action.payload
+      };
+
     case types.DELETE_TEACHER_SUCCESS:
       return {
         ...state,
         loading: false,
-        teachers: state.teachers.filter((teacher) => teacher.id !== action.payload),
+        teachers: state.teachers.filter(
+          (teacher) => teacher.id !== action.payload
+        ),
       };
     case types.GET_ALL_TEACHERS_SUCCESS:
       return {

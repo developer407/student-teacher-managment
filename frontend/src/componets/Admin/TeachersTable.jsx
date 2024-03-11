@@ -9,7 +9,9 @@ import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacherList } from "../../state/Authentication/Action";
 import { Chip, IconButton } from "@mui/material";
-import { Delete } from "@mui/icons-material";
+import { Create, Delete } from "@mui/icons-material";
+import { payTeacherAmount } from "../../state/Teacher/Action";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -17,10 +19,13 @@ export default function TeachersTable() {
   const dispatch = useDispatch();
   const { auth } = useSelector((store) => store);
   const jwt = localStorage.getItem("jwt");
+  const navigate=useNavigate();
 
   React.useEffect(() => {
     dispatch(getTeacherList(jwt));
   }, []);
+
+
 
   console.log("list", auth.teachers);
   return (
@@ -52,7 +57,7 @@ export default function TeachersTable() {
                 </TableCell>
                 <TableCell>
                   <div className="flex flex-wrap gap-1">
-                    {item.teacher.subjects.map((sub) => (
+                    {item.teacher?.subjects.map((sub) => (
                       <Chip label={sub} variant="outlined" />
                     ))}
                   </div>
@@ -76,8 +81,8 @@ export default function TeachersTable() {
                   ))}
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton color="error">
-                    <Delete />
+                  <IconButton onClick={()=>navigate(`/teacher/${item.teacher.id}`)}>
+                    <Create />
                   </IconButton>
                 </TableCell>
               </TableRow>
