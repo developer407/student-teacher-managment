@@ -45,7 +45,7 @@ function App() {
             />
             <Route path="/bookings" element={<BookingHistory />} />
             <Route path="/booking/:id" element={<BookingDetails />} />
-            <Route path="/teacher/:id" element={<TeacherDetails />} />
+            {auth.user.role === "ROLE_ADMIN" && <Route path="/teacher/:id" element={<TeacherDetails />} />}
             <Route
               path="/add-user"
               element={

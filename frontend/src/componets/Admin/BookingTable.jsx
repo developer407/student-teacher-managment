@@ -41,7 +41,7 @@ export default function BookingTable() {
                 Status
               </TableCell>
               <TableCell align="right">Update</TableCell>
-              <TableCell align="right">Remove</TableCell>
+              {/* <TableCell align="right">Remove</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -70,15 +70,18 @@ export default function BookingTable() {
                     <EditIcon />
                   </IconButton>
                 </TableCell>
-                <TableCell align="right">
+                {/* <TableCell align="right">
                   <IconButton color="error">
                     <Delete />
                   </IconButton>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        {booking.bookings?.length === 0 && <div>
+        <p className="text-center p-5 font-semibold text-2xl">no booking available...</p>
+      </div>}
       </TableContainer>
     </div>
   );

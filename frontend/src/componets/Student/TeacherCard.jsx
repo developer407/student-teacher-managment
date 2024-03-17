@@ -33,8 +33,6 @@ export const TeacherCard = ({ teacher }) => {
   const dispatch = useDispatch();
   const { auth } = useSelector((store) => store);
   const jwt = localStorage.getItem("jwt");
-  const [totalHours, setTotalHours] = useState((store) => store);
-  const [booking, setBooking] = useState(false);
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -67,12 +65,9 @@ export const TeacherCard = ({ teacher }) => {
   
   return (
     <Card className="max-w-xl p-5">
-      <p className="font-semibold text-2xl ">{teacher.fullName}</p>
+      <p className="font-semibold text-2xl mb-3">{teacher.teacher?.fullName}</p>
       <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error magnam
-        totam aut voluptas corporis suscipit, et omnis! Dicta, cum, consequuntur
-        nam excepturi, reprehenderit sunt deleniti officia animi voluptatum iure
-        rem!
+        {teacher.teacher?.description}
       </p>
       <div className="mt-5">
         <p className="font-semibold text-gray-800 pb-2">Subject</p>
@@ -122,7 +117,7 @@ export const TeacherCard = ({ teacher }) => {
             <TextField
               fullWidth
               id="outlined-basic"
-              label="Enter Completed Hours"
+              label="Enter Minutes"
               variant="outlined"
               onChange={handleChange}
             //   value={totalHours}
@@ -144,17 +139,17 @@ export const TeacherCard = ({ teacher }) => {
               </Select>
             </FormControl>
             <FormControl margin="normal" fullWidth>
-              <InputLabel id="grad-simple-select-label">Subject</InputLabel>
+              <InputLabel id="grad-simple-select-label">Grade & Fees</InputLabel>
               <Select
                 labelId="grad-simple-select-label"
                 id="grad-simple-select"
-                label="Grad & Fees"
+                label="Grade & Fees"
                 onChange={handleChange}
                 name="grad"
               >
                 {teacher.teacher.grads.map((item) => (
                   <MenuItem value={item}>
-                    {item.grad} - ${item.fees}/h
+                    {item.grad} - ${item.fees}/minute
                   </MenuItem>
                 ))}
               </Select>

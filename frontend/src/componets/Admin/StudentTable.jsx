@@ -43,7 +43,7 @@ export default function StudentsTable() {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell align="right">Remove</TableCell>
+              {/* <TableCell align="right">Remove</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -61,15 +61,18 @@ export default function StudentsTable() {
                 
                
                 
-                <TableCell align="right">
+                {/* <TableCell align="right">
                   <IconButton color="error">
                     <Delete />
                   </IconButton>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        {auth.students?.length === 0 && <div>
+        <p className="text-center p-5 font-semibold text-2xl">no students available...</p>
+      </div>}
       </TableContainer>
     </div>
   );

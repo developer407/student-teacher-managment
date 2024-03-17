@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateTeacher } from "../../state/Teacher/Action";
 
-const UpdateSubjectForm = () => {
+const UpdateSubjectForm = ({handleClose}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { booking, auth } = useSelector((store) => store);
@@ -29,7 +29,7 @@ const UpdateSubjectForm = () => {
         jwt,
       })
     );
-    // navigate("/success");
+    handleClose()
   };
   return (
     <div>

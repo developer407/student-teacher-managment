@@ -1,8 +1,9 @@
-import { Box, Button, Chip, Modal, TextField, Typography } from "@mui/material";
+import { Box, Button, Chip, IconButton, Modal, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getBookingById, updateBooking } from "../../state/Booking/Action";
 import { useDispatch, useSelector } from "react-redux";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
+// import ArrowLeftAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 export const style = {
   position: "absolute",
@@ -28,16 +29,17 @@ export const BookingDetailsCard = ({ item }) => {
     setCompletedHours(e.target.value)
   }
 
-  const handleSubmit=(e)=>{
-    e.preventDefault();
-    const data={completedHours}
-    console.log("submit")
-    dispatch(updateBooking({jwt,bookingRequest:data,id:item.id}))
-    setCompletedHours(0)
+  // const handleSubmit=(e)=>{
+  //   e.preventDefault();
+  //   const data={completedHours}
+  //   console.log("submit")
+  //   dispatch(createUpdateBookingRequest({jwt,bookingRequest:data,id:item.id}))
+  //   setCompletedHours(0)
 
-  }
+  // }
   return (
     <div className="">
+      
       <div className="lg:w-[30vw]  p-5 border rounded-md">
         <h1 className="pb-5 text-3xl font-semibold">Booking Details</h1>
         <div className="space-y-3">
@@ -45,16 +47,17 @@ export const BookingDetailsCard = ({ item }) => {
             <p className="w-52"> Booking Id:</p> <p>{booking.booking?.id} </p>
           </div>
           <div className="flex justify-between">
-            <p className="w-52"> Total Booked Hours: </p>
-            <p>{booking.booking?.totalHours} </p>
+            <p className="w-52"> Total Booked Minutes: </p>
+            <p>{booking.booking?.totalMinute} </p>
           </div>
           <div className="flex justify-between">
-            <p className="w-52 text-red-600 font-semibold"> Pendding Hours: </p>
-            {booking.booking?.pendingHours}
+            <p className="w-52 text-red-600 font-semibold"> 
+            Remaining Balance / min: </p>
+            {booking.booking?.pendingMinute}
           </div>
           <div className="flex justify-between">
-            <p className="w-52 text-green-600 font-semibold"> Completed Hours: </p>
-            {booking.booking?.completedHours}
+            <p className="w-52 text-green-600 font-semibold"> Completed Minutes: </p>
+            {booking.booking?.completedMinute}
           </div>
           <div className="flex justify-between">
             {" "}
@@ -69,6 +72,18 @@ export const BookingDetailsCard = ({ item }) => {
             <p className="w-52"> Subject: </p> <p>{item?.subject}</p>
           </div>
           <div className="flex justify-between">
+            {" "}
+            <p className="w-52  font-semibold"> Total Amount: </p> <p>{item?.totalAmount}</p>
+          </div>
+          <div className="flex justify-between">
+            {" "}
+            <p className="w-52 text-green-600 font-semibold"> Paid Amount: </p> <p>{item?.paidAmount}</p>
+          </div>
+          <div className="flex justify-between">
+            {" "}
+            <p className="w-52 text-red-600 font-semibold"> Pending Amount: </p> <p>{item?.pendingAmount}</p>
+          </div>
+          <div className="flex justify-between">
             <p className="w-52">Status:</p>
 
             <Chip
@@ -76,6 +91,16 @@ export const BookingDetailsCard = ({ item }) => {
                 booking.booking?.status === "PENDING" ? "warning" : "success"
               }
               label={booking.booking?.status}
+            />
+          </div>
+          <div className="flex justify-between">
+            <p className="w-52">Confirmed:</p>
+
+           <Chip
+              color={
+                item?.confirmed ? "success" : "error"
+              }
+              label={item?.confirmed?"yes":"no"}
             />
           </div>
         </div>

@@ -1,19 +1,18 @@
 import { Button, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateTeacher } from "../../state/Teacher/Action";
-import CloseIcon from '@mui/icons-material/Close';
 
-const UpdateAvailability = ({handleClose}) => {
+const UpdatePersionalInfoForm = ({handleClose}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { booking, auth } = useSelector((store) => store);
+  const { booking, auth, teacher } = useSelector((store) => store);
   const jwt = localStorage.getItem("jwt");
 
   const [formData, setFormData] = useState({
-    day: "",
-    hours: "",
+    fullName: "",
+    description: "",
   });
 
   const handleChange = (event) => {
@@ -26,42 +25,49 @@ const UpdateAvailability = ({handleClose}) => {
     dispatch(
       updateTeacher({
         teacherRequest: {
-          availability: [{ ...formData }, ...auth.user?.teacher.availability],
+          fullName:formData.fullName,
+          description: formData.description,
         },
         jwt,
       })
     );
-    handleClose()
+    console.log("formdata ",formData);
+    handleClose();
+   
   };
-
-  
+  useEffect(()=>{
+    setFormData({
+      fullName: auth?.user?.teacher?.fullName,
+      description: auth?.user?.teacher?.description,
+    })
+  },[teacher.teacher]);
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <TextField
           margin="normal"
-          label="day"
+          label="fullName"
           variant="outlined"
-          name="day"
+          name="fullName"
           onChange={handleChange}
           fullWidth
+          value={formData.fullName}
         />
         <TextField
           margin="normal"
-          label="hours"
+          label="description"
           variant="outlined"
-          name="hours"
+          name="description"
           onChange={handleChange}
           fullWidth
+          value={formData.description}
         />
-        <div>
-          <Button fullWidth type="submit" variant="contained" margin="normal">
-            submit
-          </Button>
-        </div>
+        <Button fullWidth type="submit" variant="contained" margin="normal">
+          submit
+        </Button>
       </form>
     </div>
   );
 };
 
-export default UpdateAvailability;
+export default UpdatePersionalInfoForm;

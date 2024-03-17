@@ -46,7 +46,7 @@ export default function TeachersTable() {
           <TableBody>
             {auth.teachers?.map((item) => (
               <TableRow
-                key={item.id}
+                key={item?.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
@@ -81,15 +81,20 @@ export default function TeachersTable() {
                   ))}
                 </TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={()=>navigate(`/teacher/${item.teacher.id}`)}>
+                  <IconButton onClick={()=>navigate(`/teacher/${item.teacher?.id}`)}>
                     <Create />
                   </IconButton>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
+          
         </Table>
+        {auth.teachers?.length === 0 && <div>
+        <p className="text-center p-5 font-semibold text-2xl">no teachers available...</p>
+      </div>}
       </TableContainer>
+    
     </div>
   );
 }

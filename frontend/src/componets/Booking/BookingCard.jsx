@@ -17,57 +17,57 @@ export const BookingCard = ({ item }) => {
   }, []);
 
   return (
-    <div className="lg:flex justify-center mt-5 px-5 gap-5">
-      <Card onClick={()=>navigate(`/booking/${item.id}`)} 
-      className="p-5 flex gap-5 cursor-pointer">
-      <div className="space-y-2">
-        <div className="flex justify-between">
-          <p className="w-52"> Booking Id:</p> <p>{item?.id} </p>
-        </div>
-        <div className="flex justify-between">
-          <p className="w-52"> Total Booked Hours: </p>
-          <p>{item?.totalHours} </p>
-        </div>
-        <div className="flex justify-between">
-            <p className="w-52">Status:</p>
+    <div className="lg:w-[60vw]">
+      <Card
+        onClick={() => navigate(`/booking/${item.id}`)}
+        className="p-5 lg:flex gap-5 cursor-pointer "
+      >
+        <div className="space-y-2 w-full">
+          <div className="flex justify-between">
+            <p > Booking Id:</p> <p>{item?.id} </p>
+          </div>
+          <div className="flex justify-between">
+            <p > Total Booked Minutes: </p>
+            <p>{item?.totalHours} </p>
+          </div>
+          <div className="flex justify-between">
+            <p >Status:</p>
 
             <Chip
-              color={
-                item?.status === "PENDING" ? "warning" : "success"
-              }
+              color={item?.status === "PENDING" ? "warning" : "success"}
               label={item?.status}
             />
           </div>
-      </div>
-      <Divider orientation="vertical" flexItem/>
-      <div className="lg:w-[30vw]">
-        {auth.user.role === "ROLE_TEACHER" ? (
-          <div className="">
-            <h1 className="mb-5">Students Details </h1>
-            <div className="flex justify-between">
-              <p className="font-semibold">Full Name</p>
-              <p className="">{item?.student.fullName}</p>
+        </div>
+        <Divider orientation="vertical" flexItem />
+        <div className="w-full">
+          {auth.user.role === "ROLE_TEACHER" ? (
+            <div className="">
+              <h1 className="mb-5">Students Details </h1>
+              <div className="flex justify-between">
+                <p className="font-semibold">Full Name</p>
+                <p className="">{item?.student.fullName}</p>
+              </div>
+              <div className="flex justify-between">
+                <p className="font-semibold">Email</p>
+                <p className="">{item?.student.email}</p>
+              </div>
             </div>
-            <div className="flex justify-between">
-              <p className="font-semibold">Email</p>
-              <p className="">{item?.student.email}</p>
+          ) : (
+            <div className=" ">
+              <h1 className="mb-5">Teachers Details </h1>
+              <div className="flex justify-between">
+                <p className="font-semibold">Full Name</p>
+                <p className="">{item?.teacher.fullName}</p>
+              </div>
+              <div className="flex justify-between">
+                <p className="font-semibold">Email</p>
+                <p className="">{item?.teacher?.email}</p>
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className=" ">
-            <h1 className="mb-5">Teachers Details </h1>
-            <div className="flex justify-between">
-              <p className="font-semibold">Full Name</p>
-              <p className="">{item?.teacher.fullName}</p>
-            </div>
-            <div className="flex justify-between">
-              <p className="font-semibold">Email</p>
-              <p className="">{item?.teacher?.email}</p>
-            </div>
-          </div>
-        )}
-        <div></div>
-      </div>
+          )}
+          <div></div>
+        </div>
       </Card>
     </div>
   );

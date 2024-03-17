@@ -33,7 +33,7 @@ export const createUser = (reqData) => async (dispatch) => {
     //   reqData.navigate("/admin/restaurant")
     // }
     
-      // reqData.navigate("/")
+      reqData.navigate("/")
     
     dispatch({ type: REGISTER_SUCCESS, payload: data.jwt });
   } catch (error) {
@@ -54,9 +54,7 @@ export const loginUser = (reqData) => async (dispatch) => {
 
     const { data } = await axios.post(`${API_URL}/auth/signin`, reqData.data);
     if(data.jwt) localStorage.setItem("jwt",data.jwt)
-    // if(data.role==="ROLE_RESTAURANT_OWNER"){
-    //   reqData.navigate("/admin/restaurant")
-    // }
+   
    
       reqData.navigate("/")
       console.log("login successful",data)
