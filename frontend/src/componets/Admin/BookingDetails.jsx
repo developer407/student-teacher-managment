@@ -59,6 +59,7 @@ export const BookingDetails = () => {
     dispatch(updateBookingDetails({ jwt, bookingRequest: data, id: id }));
     setPaidAmount(0);
   };
+  
   const handleConfirmedBooking = (e) => {
     const data = { confirmed: true };
     dispatch(updateBookingDetails({ jwt, bookingRequest: data, id: id }));

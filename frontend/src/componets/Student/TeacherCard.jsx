@@ -117,7 +117,7 @@ export const TeacherCard = ({ teacher }) => {
             <TextField
               fullWidth
               id="outlined-basic"
-              label="Enter Minutes"
+              label="Enter Hours"
               variant="outlined"
               onChange={handleChange}
             //   value={totalHours}
