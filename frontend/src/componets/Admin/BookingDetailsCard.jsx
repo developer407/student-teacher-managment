@@ -103,6 +103,10 @@ export const BookingDetailsCard = ({ item }) => {
               label={item?.confirmed?"yes":"no"}
             />
           </div>
+          <div className="flex justify-between">
+            {" "}
+            <p className="w-52 text-red-600 font-semibold"> Booking Date: </p> <p>{item?.createdAt}</p>
+          </div>
         </div>
       </div>
      
