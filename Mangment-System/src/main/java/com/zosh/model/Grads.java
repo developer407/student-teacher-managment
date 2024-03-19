@@ -9,5 +9,6 @@ public class Grads {
 
     private String grad;
     private int fees;
+    private double feesPerMinute;
 
 }

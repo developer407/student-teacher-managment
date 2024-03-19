@@ -39,7 +39,7 @@ public class User {
 
     private LocalDateTime createdAt;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Teacher teacher;
 
     

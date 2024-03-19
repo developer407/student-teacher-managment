@@ -1,6 +1,7 @@
 package com.zosh.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zosh.domain.PaymentMethod;
 import jakarta.persistence.*;
 
 import lombok.Data;
@@ -31,6 +32,24 @@ public class Teacher{
     @OneToOne
     @JsonIgnore
     private User user;
+
+    private double totalPaidAmount;
+
+    private double pendingAmount;
+
+    private String description;
+
+    private String fullName;
+
+    private String email;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    private String accountNo;
+    private String ifcCode;
+
+    private String westernUnionName;
 
 
 }

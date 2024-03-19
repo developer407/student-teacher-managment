@@ -1,6 +1,6 @@
 package com.zosh.service;
 
-import com.zosh.domain.USER_ROLE;
+import com.zosh.domain.UserRole;
 import com.zosh.model.User;
 import com.zosh.repository.UserRepository;
 
@@ -20,15 +20,13 @@ public class DataInitializationComponent implements CommandLineRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-
     @Override
     public void run(String... args) {
         initializeAdminUser();
     }
 
     private void initializeAdminUser() {
-        String adminUsername = "mahmadieh8@gmail.com";
+        String adminUsername = "mahmadieh@gmail.com";
 
         if (userRepository.findByEmail(adminUsername)==null) {
             User adminUser = new User();
@@ -36,7 +34,7 @@ public class DataInitializationComponent implements CommandLineRunner {
             adminUser.setPassword(passwordEncoder.encode("12345678"));
             adminUser.setFullName("Maha Hammadi");
             adminUser.setEmail(adminUsername);
-            adminUser.setRole(USER_ROLE.ROLE_SUPER_ADMIN);
+            adminUser.setRole(UserRole.ROLE_ADMIN);
 
             User admin=userRepository.save(adminUser);
         }

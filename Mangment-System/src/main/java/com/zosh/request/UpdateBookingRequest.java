@@ -5,5 +5,5 @@ import lombok.Data;
 
 @Data
 public class UpdateBookingRequest {
-    private int completedHours;
+    private int completedMinutes;
 }

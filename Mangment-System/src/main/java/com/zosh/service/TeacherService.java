@@ -16,4 +16,6 @@ public interface TeacherService {
 
     Teacher getTeacherByUserId(Long userId);
 
+    Teacher payAmount(Long id,double amount,User admin);
+
 }

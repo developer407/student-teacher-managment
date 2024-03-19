@@ -20,8 +20,8 @@ public class TeacherServiceImpl implements TeacherService {
     public Teacher createTeacher(TeacherRequest teacherRequest,User user) {
         Teacher teacher = new Teacher();
         teacher.setAvailability(teacherRequest.getAvailability());
-        teacher.setSubjects(new HashSet<>(teacherRequest.getSubjects()));
-        teacher.setGrads(new HashSet<>(teacherRequest.getGrads()));
+        teacher.setSubjects(teacherRequest.getSubjects());
+        teacher.setGrads(teacherRequest.getGrads());
         teacher.setUser(user);
         user.setTeacher(teacher);
 
@@ -32,13 +32,38 @@ public class TeacherServiceImpl implements TeacherService {
     public Teacher updateTeacher(User user, TeacherRequest teacherRequest) throws Exception {
         Teacher existingTeacher = teacherRepository.findByUserId(user.getId());
 
-        if (existingTeacher != null) {
-            existingTeacher.setAvailability(teacherRequest.getAvailability());
-            existingTeacher.setSubjects(new HashSet<>(teacherRequest.getSubjects()));
-            existingTeacher.setGrads(new HashSet<>(teacherRequest.getGrads()));
-            return teacherRepository.save(existingTeacher);
+        if (existingTeacher == null) {
+            throw new Exception("user not found");
+
         }
-        throw new Exception("user not found");
+       if(teacherRequest.getAvailability()!=null){
+           existingTeacher.setAvailability(teacherRequest.getAvailability());
+       }
+       if(teacherRequest.getSubjects()!=null){
+           existingTeacher.setSubjects(teacherRequest.getSubjects());
+       }
+       if(teacherRequest.getGrads()!=null){
+           existingTeacher.setGrads(teacherRequest.getGrads());
+       }
+       if(teacherRequest.getPaymentMethod()!=null){
+           existingTeacher.setPaymentMethod(teacherRequest.getPaymentMethod());
+       }
+       if(teacherRequest.getAccountNo()!=null){
+           existingTeacher.setAccountNo(teacherRequest.getAccountNo());
+       }
+       if(teacherRequest.getIfcCode()!=null){
+           existingTeacher.setIfcCode(teacherRequest.getIfcCode());
+       }
+       if(teacherRequest.getWesternUnionName()!=null){
+           existingTeacher.setWesternUnionName(teacherRequest.getWesternUnionName());
+       }
+       if(teacherRequest.getDescription()!=null){
+           existingTeacher.setDescription(teacherRequest.getDescription());
+       }
+       if(teacherRequest.getFullName()!=null){
+           existingTeacher.setFullName(teacherRequest.getFullName());
+       }
+        return teacherRepository.save(existingTeacher);
     }
 
     @Override
@@ -59,6 +84,17 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teacher getTeacherByUserId(Long userId) {
         return teacherRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Teacher payAmount(Long id, double amount, User admin) {
+        Teacher teacher=getTeacherById(id);
+        if(amount>teacher.getPendingAmount()){
+            throw new Error("unsuficiant balance");
+        }
+        teacher.setPendingAmount(teacher.getPendingAmount()-amount);
+        teacher.setTotalPaidAmount(teacher.getTotalPaidAmount()+amount);
+        return teacherRepository.save(teacher);
     }
 }
 
